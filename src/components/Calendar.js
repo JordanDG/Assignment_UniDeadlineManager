@@ -252,25 +252,29 @@ export default function Calendar(props) {
     ]
 
     let CalculatedDate = monthDays[month][date-1];
+    const newMonthCrossOver = [monthDays[month+1][0], monthDays[month+1][1], monthDays[month+1][2]];
+    const previousMonthCrossOver = [monthDays[month-1].length-1, monthDays[month-1].length-2, monthDays[month-1].length-3,];
     const [activeDate, setActiveDate] = useState(`${CalculatedDate}/${[month]}/${year}`);
+
+    console.log(previousMonthCrossOver);
 
     async function LoadNotes() {
         try {
             setNothingLoaded(false);
             setLoadState(true);
             if(page === 1) {
-                let FinalDate = `${CalculatedDate-3}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate-3}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate-3 < 1 ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-3}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate-3 > monthDays[month][monthDays.length-1] ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-3}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData(FinalDate);
             } else if(page === 2) {
-                let FinalDate = `${CalculatedDate-2}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate-2}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate-2 < 1 ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-2}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate-3 > monthDays[month][monthDays.length-1] ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-3}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData(FinalDate)
             } else if(page === 3) {
-                let FinalDate = `${CalculatedDate-1}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate-1}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate-1 < 1 ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-1}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate-3 > monthDays[month][monthDays.length-1] ? `${previousMonthCrossOver[2]}/${month}/${year}` : `${CalculatedDate-3}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData(FinalDate);
             } else if(page === 4) {
@@ -279,18 +283,18 @@ export default function Calendar(props) {
                 console.log(FinalDate);
                 LoadData(FinalDate);
             } else if(page === 5) {
-                let FinalDate = `${CalculatedDate+1}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate+1}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate+1 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+1}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate+1 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+1}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData(FinalDate);
             } else if(page === 6) {
-                let FinalDate = `${CalculatedDate+2}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate+2}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate+2 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+2}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate+2 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+2}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData();
             } else if(page === 7) {
-                let FinalDate = `${CalculatedDate+3}/${[month]}/${year}`;
-                setActiveDate(`${CalculatedDate+3}/${[month]}/${year}`);
+                let FinalDate = CalculatedDate+3 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+3}/${[month]}/${year}`;
+                setActiveDate(CalculatedDate+3 > monthDays[month][monthDays.length-1] ? `${newMonthCrossOver[2]}/${month+1}/${year}` : `${CalculatedDate+3}/${[month]}/${year}`);
                 console.log(FinalDate);
                 LoadData(FinalDate);
             }
@@ -369,18 +373,18 @@ export default function Calendar(props) {
                     <CalendarTileYear>{year}</CalendarTileYear>
                 </CalendarTile>
                 <CalendarTile onClick={() => {setPage(5); setNothingLoaded(true);}}>
-                    <CalendarTileDate>{CalculatedDate+1}</CalendarTileDate>
-                    <CalendarTileMonth>{monthNames[month-1]}</CalendarTileMonth>
+                    <CalendarTileDate>{CalculatedDate+1 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[0] : CalculatedDate+1}</CalendarTileDate>
+                    <CalendarTileMonth>{CalculatedDate+1 > monthDays[month][monthDays.length-1] ? monthNames[month] : monthNames[month-1]}</CalendarTileMonth>
                     <CalendarTileYear>{year}</CalendarTileYear>
                 </CalendarTile>
                 <CalendarTile onClick={() => {setPage(6); setNothingLoaded(true);}}>
-                    <CalendarTileDate>{CalculatedDate+2}</CalendarTileDate>
-                    <CalendarTileMonth>{monthNames[month-1]}</CalendarTileMonth>
+                    <CalendarTileDate>{CalculatedDate+2 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[1] : CalculatedDate+2}</CalendarTileDate>
+                    <CalendarTileMonth>{CalculatedDate+2 > monthDays[month][monthDays.length-1] ? monthNames[month] : monthNames[month-1]}</CalendarTileMonth>
                     <CalendarTileYear>{year}</CalendarTileYear>
                 </CalendarTile>
                 <CalendarTile onClick={() => {setPage(7); setNothingLoaded(true);}}>
-                    <CalendarTileDate>{CalculatedDate+3}</CalendarTileDate>
-                    <CalendarTileMonth>{monthNames[month-1]}</CalendarTileMonth>
+                    <CalendarTileDate>{CalculatedDate+3 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[2] : CalculatedDate+3}</CalendarTileDate>
+                    <CalendarTileMonth>{CalculatedDate+3 > monthDays[month][monthDays.length-1] ? monthNames[month] : monthNames[month-1]}</CalendarTileMonth>
                     <CalendarTileYear>{year}</CalendarTileYear>
                 </CalendarTile>
             </CalendarContentsContainer>
@@ -392,9 +396,9 @@ export default function Calendar(props) {
                 {page === 2 && `Reminders for ${monthNames[month-1]} ${CalculatedDate-2}:`}
                 {page === 3 && `Reminders for yesterday, ${monthNames[month-1]} ${CalculatedDate-1}:`}
                 {page === 4 && `Reminders for today, ${monthNames[month-1]} ${CalculatedDate}:`}
-                {page === 5 && `Reminders for tomorrow,  ${monthNames[month-1]} ${CalculatedDate+1}:`}
-                {page === 6 && `Reminders for ${monthNames[month-1]} ${CalculatedDate+2}:`}
-                {page === 7 && `Reminders for ${monthNames[month-1]} ${CalculatedDate+3}:`}
+                {page === 5 && `Reminders for tomorrow, ${CalculatedDate+1 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[0] + " " + monthNames[month] : CalculatedDate+1 + " " + monthNames[month-1]}:`}
+                {page === 6 && `Reminders for ${CalculatedDate+2 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[1] + " " + monthNames[month] : CalculatedDate+2 + " " + monthNames[month-1]}:`}
+                {page === 7 && `Reminders for ${CalculatedDate+3 > monthDays[month][monthDays.length-1] ? newMonthCrossOver[2] + " " + monthNames[month] : CalculatedDate+3 + " " + monthNames[month-1]}:`}
             </CalendarDateContainer>
             <CalendarNotesContent>
                 {(page > 0) && nothingLoaded === true && <LoadingButton onClick={() => {LoadData(); LoadNotes();}}>Load Notes</LoadingButton>}
