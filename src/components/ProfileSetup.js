@@ -135,10 +135,10 @@ export default function ProfileSetup(props) {
         });
         setLoadState(false);
     }, [user.email, UserInfo]);
-    const UserNameInitial = UserInfo[0];
 
     const handleUserInfo = async () => {
         setLoadState(true);
+        const UserNameInitial = UserInfo[0];
         const EditID = UserNameInitial.id;
         const docRef = doc(db, "users", EditID);
         const payload = {Email: user.email, Name: NewUserName.current.value, University: NewUserUniversity.current.value, Year: NewUserYear.current.value};
